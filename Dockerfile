@@ -1,11 +1,9 @@
-FROM openjdk:8-jre-slim
-MAINTAINER xuxueli
+FROM java:8
+MAINTAINER tyrande <errmao@aliyun.com>
 
-ENV PARAMS=""
+ADD tyrande-job-1.0.0.jar /data/tyrande-job-1.0.0.jar
 
-ENV TZ=PRC
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo 'Asia/Shanghai' >/etc/timezone
 
-ADD target/xxl-job-admin-*.jar /app.jar
-
-ENTRYPOINT ["sh","-c","java -jar $JAVA_OPTS /app.jar $PARAMS"]
+ENTRYPOINT ["java","-jar","/data/tyrande-job-1.0.0.jar"]
